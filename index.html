@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-size: 20px;
+        }
+
+        .from {
+            float: left;
+            width: 48%;
+        }
+
+        .to {
+            float: right;
+            width: 48%;
+        }
+
+        select {
+            width: 98%;
+            padding: 5px 5px;
+            font-size: 18px;
+            outline: none;
+            text-align: center;
+            color: rgb(252, 24, 130);
+            background-color: aqua;
+            font-weight: bold;
+        }
+
+        select option:nth-child(even) {
+            background-color: rgb(177, 216, 253);
+
+        }
+
+        select option:nth-child(odd) {
+            background-color: rgb(255, 255, 255);
+
+        }
+
+        select option {
+            margin-top: 2em;
+        }
+
+        .join {
+            font-weight: bold;
+        }
+
+        input {
+            width: 95%;
+            margin-top: 1em;
+            padding: 3px 5px;
+            font-size: 20px;
+            outline: none;
+        }
+
+        .convertbtn {
+            margin: auto;
+            display: flex;
+            margin-top: 6em;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: transparent;
+            color: blue;
+            outline: none;
+            border: 2px solid blue;
+            cursor: pointer;
+            padding: 5px 2em;
+            border-radius: 5px;
+            transition: 0.5s;
+            margin-bottom: 1em;
+        }
+
+        .convertbtn:hover {
+            background-color: orange;
+            border: 2px solid orange;
+            color: white;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .binarybtn {
+            margin: auto;
+            /* display: flex; */
+            margin-top: 4em;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: transparent;
+            color: orange;
+            outline: none;
+            border: 2px solid orange;
+            cursor: pointer;
+            padding: 5px 2em;
+            border-radius: 5px;
+            transition: 0.5s;
+            margin-bottom: 1em;
+        }
+
+        .binarybtn:hover {
+            background-color: blue;
+            border: 2px solid blue;
+            color: white;
+        }
+
+        textarea {
+            margin-top: 1em;
+            width: 90%;
+            height: 8em;
+            resize: none;
+            text-align: center;
+            padding-top: 0.5em;
+        }
+
+        h3 {
+            margin: 0.5 0 0.5em 0;
+            padding: 0;
+            text-align: center;
+            text-decoration: underline;
+        }
+
+        h3 span {
+            color: rgb(255, 123, 0);
+            text-decoration: underline;
+        }
+
+        #binarycal {
+            width: 90%;
+        }
+
+        #cross {
+            position: relative;
+            float: right;
+            right: 1em;
+            top: 0em;
+            margin: 0.5em 0px;
+            padding: 1em;
+            cursor: pointer;
+
+        }
+
+        #cross::after {
+            content: "";
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: 4px;
+            height: 1em;
+            bottom: 8px;
+            background-color: red;
+            transform: rotate(45deg);
+        }
+
+        #cross::before {
+            content: "";
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: 4px;
+            height: 1em;
+            bottom: 8px;
+
+            background-color: red;
+            transform: rotate(-45deg);
+        }
+
+        #cross:hover {
+            background-color: rgba(168, 168, 168, 0.473);
+
+        }
+
+        #alert {
+            background-color: rgb(222, 240, 252);
+            width: 90%;
+            border: 2px solid rgba(94, 94, 94, 0.288);
+            text-align: center;
+            position: fixed;
+            top: 20%;
+            left: 5%;
+            display: none;
+            border-radius: 10px;
+            transition: 5s;
+        }
+
+        #alert p {
+            margin: 0;
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        #alert .cover {
+            margin: 3em 0;
+        }
+
+        #good {
+            color: rgb(52, 20, 192);
+            text-shadow: 1px 1px 1px rgb(66, 66, 66);
+        }
+
+        #wish {
+            color: rgb(255, 6, 180);
+            text-shadow: 1px 1px 1px black;
+        }
+
+        #askusername {
+            width: 50%;
+            margin: auto;
+            border: 2px solid blue;
+            padding: 1em 1em 2em 1em;
+            position: absolute;
+            top: 1em;
+            right: 25%;
+            background-color: aliceblue;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px black;
+            display: none;
+        }
+
+        #askusername p {
+            margin: 0 !important;
+
+        }
+
+        #askusername button {
+            background-color: transparent;
+            outline: none;
+            border: 2px solid rgb(255, 81, 0);
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            left: 50%;
+            color: rgb(255, 81, 0);
+            padding: 0.5em 1.5em;
+            font-weight: bold;
+            margin: 1em auto auto auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Binary <span>Conversation</span></h3>
+    <div class="from">
+        <select id="fromnumber">
+            <option>Binary number</option>
+            <option>Decimal number</option>
+            <option>Octal number</option>
+            <option>Hexadecimal number</option>
+        </select><br>
+        <input type="text" placeholder="Enter the number" id="usernumber">
+    </div>
+    <span class="join">To</span>
+    <div class="to" id="dd">
+        <select id="tonumber">
+            <option>Binary number</option>
+            <option selected>Decimal number</option>
+            <option>Octal number</option>
+            <option>Hexadecimal number</option>
+        </select><br>
+        <input type="text" placeholder="Your result" disabled id="result">
+    </div>
+    <button onclick="convert()" class="convertbtn">Convert</button>
+    <hr>
+
+    <!-- binary additaion section  -->
+    <h3>Binary <span>Calculation</span></h3>
+
+    <div class="from">
+        <select id="binarycal">
+            <option selected>Binary Addition</option>
+            <option>Binary subtraction</option>
+            <option>Binary Multiplaction</option>
+            <option>Binary Division</option>
+        </select>
+        <input type="number" placeholder="Enter your first expression" id="firstterm">
+        <input type="number" placeholder="Enter your second expression" id="secondterm">
+    </div>
+    <div class="to">
+        <textarea placeholder="Result" disabled id="textarea"></textarea>
+    </div>
+    <button onclick="addnumber()" class="binarybtn">Calculation</button>
+    <hr>
+    <div id="alert">
+        <span id="cross"></span>
+        <div class="cover">
+            <p id="good"></p>
+            <p id="wish"></p>
+        </div>
+    </div>
+    <div id="askusername">
+        <p>Please enter your name ?</p>
+        <input type="text" id="usernameforwishes" placeholder="Name please..."><br>
+        <button id="setusername">OK</button>
+        <div id="errorrr"></div>
+    </div>
+    <script>
+        function convert() {
+            var output;
+            var usernumber = document.getElementById("usernumber").value;
+            var fromnumber = document.getElementById("fromnumber");
+            var tonumber = document.getElementById("tonumber");
+            var result = document.getElementById("result");
+            if (fromnumber.value == "Binary number") {
+                if (tonumber.value == "Decimal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 2).toString(10);
+                    }
+                }
+                else if (tonumber.value == "Octal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 2).toString(8);
+
+                    }
+                }
+                else if (tonumber.value == "Hexadecimal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 2).toString(16);
+
+                    }
+                }
+                else {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 2).toString(2);
+                    }
+                }
+
+            } else if (fromnumber.value == "Decimal number") {
+                if (tonumber.value == "Decimal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 10).toString(10);
+                    }
+                }
+                else if (tonumber.value == "Octal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 10).toString(8);
+                    }
+                }
+                else if (tonumber.value == "Hexadecimal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 10).toString(16);
+                    }
+                }
+                else {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 10).toString(2);
+                    }
+                }
+
+
+            } else if (fromnumber.value == "Octal number") {
+                if (tonumber.value == "Decimal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 8).toString(10);
+                    }
+                }
+                else if (tonumber.value == "Octal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 8).toString(8);
+                    }
+                }
+                else if (tonumber.value == "Hexadecimal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 8).toString(16);
+                    }
+                }
+                else {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 8).toString(2);
+                    }
+                }
+            } else if (fromnumber.value == "Hexadecimal number") {
+                if (tonumber.value == "Decimal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 16).toString(10);
+                    }
+                }
+                else if (tonumber.value == "Octal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 16).toString(8);
+                    }
+                }
+                else if (tonumber.value == "Hexadecimal number") {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 16).toString(16);
+                    }
+                }
+                else {
+                    document.getElementById("result").value = bin2dec(usernumber);
+                    function bin2dec(bin) {
+                        return parseInt(bin, 16).toString(2);
+                    }
+                }
+            }
+            else { }
+        }
+
+    </script>
+    <!-- binary add -->
+    <script>
+        function addnumber() {
+            var12 = parseInt(document.getElementById("firstterm").value, 2).toString(10);
+            var13 = parseInt(var12);
+
+            var14 = parseInt(document.getElementById("secondterm").value, 2).toString(10);
+            var15 = parseInt(var14);
+            if (document.getElementById("binarycal").value == "Binary Addition") {
+                var var16 = parseInt(var13 + var15);
+                var var17 = parseInt(var16, 10).toString(2);
+                document.getElementById("textarea").value = var17;
+            }
+            else if (document.getElementById("binarycal").value == "Binary subtraction") {
+                var var16 = parseInt(var13 - var15);
+                var var17 = parseInt(var16, 10).toString(2);
+                document.getElementById("textarea").value = var17;
+            }
+            else if (document.getElementById("binarycal").value == "Binary Multiplaction") {
+                var var16 = parseInt(var13 * var15);
+                var var17 = parseInt(var16, 10).toString(2);
+                document.getElementById("textarea").value = var17;
+            }
+            else {
+                var var16 = parseInt(var13 / var15);
+                var var17 = parseInt(var16, 10).toString(2);
+                document.getElementById("textarea").value = var17;
+
+            }
+        }
+    </script>
+    <script>
+        function wishes() {
+            const hou = new Date();
+            let hour = hou.getHours();
+            if (hour > 0 && hour < 12) {
+                document.getElementById("good").innerHTML = "Good Morning " + localStorage.getItem("setusernamess") + " ...";
+                document.getElementById("wish").innerHTML = "Have a Great Day..";
+
+            }
+            else if (hour > 12 && hour < 16) {
+                document.getElementById("wish").innerHTML = "Have a Nice Time..";
+                document.getElementById("good").innerHTML = "Good Afternoon " + localStorage.getItem("setusernamess") + " ...";
+
+            }
+            else {
+                document.getElementById("good").innerHTML = "Good Evening " + localStorage.getItem("setusernamess") + " ...";
+                document.getElementById("wish").innerHTML = "Have a Nice Time..";
+            }
+
+
+            setTimeout(() => {
+                document.getElementById("alert").style.display = "block"
+
+            }, 1000);
+
+        }
+        document.getElementById("setusername").onclick = function () {
+            localStorage.setItem("setusernamess", document.getElementById("usernameforwishes").value);
+            document.getElementById("askusername").style.display = "none"
+
+            wishes();
+
+        }
+        window.onload = function () {
+
+            
+            // localStorage.setItem("lastname", "Smith");
+            var getusernamelc = localStorage.getItem("setusernamess");
+            if (getusernamelc == null) {
+                document.getElementById("askusername").style.display = "block"
+
+
+            } else {
+                wishes();
+
+            };
+
+
+        }
+        document.getElementById("cross").onclick = function () {
+            document.getElementById("alert").style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>
